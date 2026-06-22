@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彩金网 · 信息卡片介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fbe9d7 0%, #f3d5b5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.8rem;
+            line-height: 1.7;
+            color: #3a2c1b;
+        }
+
+        .container {
+            max-width: 1120px;
+            width: 100%;
+            background: rgba(255, 250, 240, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 3rem;
+            padding: 2.8rem 2.5rem;
+            box-shadow: 0 20px 40px -12px rgba(120, 70, 30, 0.25);
+        }
+
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        /* hero 卡片 */
+        .hero-card {
+            background: #fffcf7;
+            border-radius: 2.2rem;
+            padding: 2.6rem 2.8rem;
+            box-shadow: 0 8px 20px rgba(170, 120, 70, 0.12);
+            text-align: center;
+            border: 1px solid rgba(220, 180, 140, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: 60%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(235, 180, 120, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 450;
+            letter-spacing: 0.02em;
+            color: #5b3f24;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, #b47d56, #8f623b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 500;
+        }
+
+        .hero-sub {
+            margin-top: 0.6rem;
+            font-size: 1.1rem;
+            color: #6e5539;
+            border-bottom: 1px dashed #e4cfb8;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        .hero-text {
+            margin-top: 1.8rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.05rem;
+            color: #4e3d2b;
+        }
+
+        .hero-text a {
+            color: #a67248;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 2px solid #e7cdb2;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .hero-text a:hover {
+            border-bottom-color: #a67248;
+            color: #7b5535;
+        }
+
+        /* 用途卡片组 */
+        .features-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 1.2rem 0 0.6rem;
+        }
+
+        .feature-card {
+            background: #fffefa;
+            border-radius: 1.8rem;
+            padding: 1.8rem 1.6rem 2rem;
+            box-shadow: 0 4px 14px rgba(150, 110, 70, 0.08);
+            border: 1px solid #eddccb;
+            transition: transform 0.18s, box-shadow 0.18s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(150, 110, 70, 0.12);
+            border-color: #dabd9e;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.6rem;
+            color: #b2814f;
+        }
+
+        .feature-title {
+            font-weight: 520;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #4f3922;
+            letter-spacing: 0.01em;
+        }
+
+        .feature-desc {
+            font-size: 0.97rem;
+            color: #5a4633;
+        }
+
+        /* 适合人群卡片——柔和双列 */
+        .audience-section {
+            background: #fffaf2;
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            margin-top: 0.4rem;
+            border: 1px solid #e7d4bf;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 450;
+            color: #6b4f33;
+            margin-bottom: 1.4rem;
+            font-size: 1.2rem;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+        }
+
+        @media (max-width: 500px) {
+            .audience-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .audience-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #efe2d2;
+        }
+
+        .audience-bullet {
+            width: 8px;
+            height: 8px;
+            background: #cfb094;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .audience-text {
+            font-size: 0.98rem;
+            color: #4f3e2b;
+        }
+
+        /* 自然链接段落 */
+        .link-paragraph {
+            background: #fffbf5;
+            border-radius: 2rem;
+            padding: 1.6rem 2rem;
+            margin-top: 0.6rem;
+            border-left: 6px solid #dbbd9f;
+            font-size: 1.02rem;
+            color: #3d3224;
+        }
+
+        .link-paragraph a {
+            color: #8b643f;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 2px solid #e1c8b0;
+            transition: border-color 0.2s, background 0.15s;
+            padding: 0 0.1rem;
+        }
+
+        .link-paragraph a:hover {
+            border-bottom-color: #8b643f;
+            background: #f2e2d0;
+            border-radius: 4px;
+        }
+
+        .link-paragraph strong {
+            font-weight: 520;
+            color: #5d3e26;
+        }
+
+        /* FAQ 摘要 */
+        .faq-brief {
+            margin-top: 1.6rem;
+            background: #f8efe5;
+            border-radius: 2rem;
+            padding: 1.6rem 2rem;
+            border: 1px solid #e3cdb7;
+        }
+
+        .faq-item {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .faq-q {
+            font-weight: 500;
+            color: #694b2e;
+            min-width: 5.8rem;
+        }
+
+        .faq-a {
+            color: #4d3b28;
+        }
+
+        .faq-a a {
+            color: #8f6944;
+            border-bottom: 1px dotted #cfb497;
+            text-decoration: none;
+        }
+
+        .faq-a a:hover {
+            border-bottom-style: solid;
+            color: #6e4f32;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #e4d2be;
+            margin: 1rem 0 0.6rem;
+            opacity: 0.5;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            text-align: center;
+            color: #776247;
+            background: #fcf3e9;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            display: inline-block;
+            width: auto;
+            backdrop-filter: blur(2px);
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 1.8rem 1.2rem;
+            }
+            .hero-card {
+                padding: 2rem 1.5rem;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .feature-card {
+                padding: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card-grid">
+
+        <!-- hero 主视觉卡片 -->
+        <div class="hero-card">
+            <div class="hero-title">关于 <span>彩金网</span></div>
+            <div class="hero-sub">信息卡片 · 温和叙述</div>
+            <div class="hero-text">
+                当人们谈论线上内容与信息聚合时，常常会想到一些既有广度又有深度的平台。
+                <a href="https://index-cjw.com">彩金网</a> 便是这样一处值得驻足的角落。
+                它不追逐喧嚣，而是以稳定的结构梳理着各类素材，让浏览者能够依照自己的节奏去发现、理解。
+                无论是日常资讯的集合，还是特定主题的整理，这里都呈现出一种干净而连贯的秩序。
+            </div>
+        </div>
+
+        <!-- 用途卡片三列 -->
+        <div class="features-row">
+            <div class="feature-card">
+                <span class="feature-icon">📋</span>
+                <div class="feature-title">信息聚合</div>
+                <div class="feature-desc">将分散的内容归纳成可读的模块，减少信息噪音，让每一次浏览都更聚焦。</div>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🧭</span>
+                <div class="feature-title">主题导航</div>
+                <div class="feature-desc">按逻辑组织页面与资源，你可以像翻阅手册一样，快速定位自己感兴趣的板块。</div>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🪴</span>
+                <div class="feature-title">轻量参考</div>
+                <div class="feature-desc">不堆砌冗余组件，保持页面清爽，适合作为日常查阅或灵感收集的起点。</div>
+            </div>
+        </div>
+
+        <!-- 适合人群卡片 (双栏) -->
+        <div class="audience-section">
+            <div class="section-label">
+                <span>👥</span> 适合这样的人群
+            </div>
+            <div class="audience-grid">
+                <div class="audience-item">
+                    <span class="audience-bullet"></span>
+                    <span class="audience-text">习惯通过固定入口获取综合内容的浏览者</span>
+                </div>
+                <div class="audience-item">
+                    <span class="audience-bullet"></span>
+                    <span class="audience-text">对网站信息架构抱有好奇的轻量研究者</span>
+                </div>
+                <div class="audience-item">
+                    <span class="audience-bullet"></span>
+                    <span class="audience-text">偶尔需要安静参考页面的写作或编辑者</span>
+                </div>
+                <div class="audience-item">
+                    <span class="audience-bullet"></span>
+                    <span class="audience-text">希望找到不打扰、节奏温和的线上空间的人</span>
+                </div>
+                <div class="audience-item">
+                    <span class="audience-bullet"></span>
+                    <span class="audience-text">对主题分类和内容聚合有基础需求的用户</span>
+                </div>
+                <div class="audience-item">
+                    <span class="audience-bullet"></span>
+                    <span class="audience-text">正在尝试建立个人浏览习惯的初学者</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 自然链接段落 -->
+        <div class="link-paragraph">
+            <p>如果你正好在寻找一个能提供稳定内容框架的站点，不妨把 <a href="https://index-cjw.com">彩金网</a>
+            加入书签。它保持着一种朴素的实用性——既不试图用浮夸的视觉吸引注意力，也不刻意简化到失去层次。
+            在这里，你能感受到一种中性的整理哲学：页面之间的跳转自然流畅，信息层级清晰而不僵硬。
+            对于喜欢自己掌控阅读节奏的人来说，这样的环境往往比那些过度设计的门户更令人放松。</p>
+        </div>
+
+        <!-- FAQ 摘要 -->
+        <div class="faq-brief">
+            <div style="display:flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
+                <span style="font-size:1.2rem;">❔</span>
+                <span style="font-weight:450; color:#654a30;">常见想法摘要</span>
+            </div>
+            <div class="faq-item">
+                <span class="faq-q">这是什么类型？</span>
+                <span class="faq-a">一个内容聚合与主题索引页面，结构偏向信息卡片式。</span>
+            </div>
+            <div class="faq-item">
+                <span class="faq-q">适合初次接触吗？</span>
+                <span class="faq-a">是的，页面引导比较自然，没有复杂的操作门槛。</span>
+            </div>
+            <div class="faq-item">
+                <span class="faq-q">内容更新快吗？</span>
+                <span class="faq-a">保持适度的迭代节奏，更注重分类与沉淀。</span>
+            </div>
+            <div class="faq-item" style="margin-bottom:0;">
+                <span class="faq-q">如何直达？</span>
+                <span class="faq-a">你可以随时通过 <a href="https://index-cjw.com">彩金网</a> 访问。</span>
+            </div>
+            <hr>
+            <div style="font-size:0.92rem; color:#5b4833; margin-top:0.5rem;">
+                * 以上描述基于公开页面特征，不含未经验证的主张。
+            </div>
+        </div>
+
+        <!-- 柔和留白+脚标 -->
+        <div style="display:flex; justify-content:flex-end;">
+            <div class="footer-note">
+                —— 卡片式 · 暖调叙述
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
